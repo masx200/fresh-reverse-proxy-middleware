@@ -13,7 +13,7 @@ export async function handler(
     requestHeaders.append(
         "Forwarded",
         `by=${nextUrl.host}; for=${
-            request.headers.get("x-forwarded-for")
+            ctx.remoteAddr.hostname
         }; host=${nextUrl.host}; proto=${
             nextUrl.href.startsWith("https://") ? "https" : "http"
         }`,
