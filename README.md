@@ -22,7 +22,7 @@ This will watch the project directory and restart as necessary.
 设置环境变量 token 访问秘钥
 
 ```
-npx cross-env token=token123456 npm run dev
+npx cross-env token=token123456  deno task start
 ```
 
 访问地址:
