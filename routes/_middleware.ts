@@ -77,6 +77,23 @@ export async function handler(
     }
     const resp = await ctx.next();
     // resp.headers.set("server", "fresh server");
+    console.log(
+        JSON.stringify(
+            {
+                response: {
+                    headers: Object.fromEntries(resp.headers),
+                    status: resp.status,
+                },
+                request: {
+                    method: request.method,
+                    url: request.url,
+                    headers: Object.fromEntries(request.headers),
+                },
+            },
+            null,
+            4,
+        ),
+    );
     return resp;
 }
 async function reverse_proxy(
