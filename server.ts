@@ -121,8 +121,7 @@ export async function start(
     const realConfig = config.server ?? config;
     const handler_old = ctx.handler();
     const handler: Deno.ServeHandler = middleware
-        ? (req, info) =>
-            middleware(req, info, (req, info) => handler_old(req, info))
+        ? (req, info) => middleware(req, info, () => handler_old(req, info))
         : handler_old;
     await startServer(handler, {
         ...realConfig,

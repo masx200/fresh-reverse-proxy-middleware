@@ -1,9 +1,6 @@
-import { FreshContext } from "$fresh/server.ts";
-export async function handler(
-    request: Request,
-    ctx: FreshContext,
+export async function middleware(
+    ...[request, info, next]: Parameters<DenoMiddleWare>
 ): Promise<Response> {
-    // ctx.state.data = "myData";
     const nextUrl = new URL(request.url);
     console.log({ method: request.method, url: request.url });
 
@@ -12,7 +9,7 @@ export async function handler(
     const requestHeaders = new Headers(request.headers);
     requestHeaders.append(
         "Forwarded",
-        `by=${nextUrl.host}; for=${ctx.remoteAddr.hostname}; host=${nextUrl.host}; proto=${
+        `by=${nextUrl.host}; for=${info.remoteAddr.hostname}; host=${nextUrl.host}; proto=${
             nextUrl.href.startsWith("https://") ? "https" : "http"
         }`,
     );
@@ -75,7 +72,7 @@ export async function handler(
         // });
         return await reverse_proxy(url, requestHeaders, request);
     }
-    const resp = await ctx.next();
+    const resp = await next();
     // resp.headers.set("server", "fresh server");
     console.log(
         JSON.stringify(
@@ -96,6 +93,7 @@ export async function handler(
     );
     return resp;
 }
+import { DenoMiddleWare } from "./DenoMiddleWare.ts";
 async function reverse_proxy(
     url: URL,
     requestHeaders: Headers,
