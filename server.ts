@@ -113,7 +113,7 @@ export async function start(
     manifest: Manifest,
     config: FreshConfig = {},
     middleware?: DenoMiddleWare,
-) {
+): Promise<void> {
     const ctx = await ServerContext.fromManifest(manifest, {
         ...config,
         dev: false,
