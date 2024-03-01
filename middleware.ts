@@ -1,4 +1,42 @@
-export async function middleware(
+export async function middlewareLogger(
+    ...[request, info, next]: Parameters<DenoMiddleWare>
+): Promise<Response> {
+    console.log(
+        JSON.stringify(
+            {
+                ...info,
+                request: {
+                    method: request.method,
+                    url: request.url,
+                    headers: Object.fromEntries(request.headers),
+                },
+            },
+            null,
+            4,
+        ),
+    );
+    const resp = await next();
+    console.log(
+        JSON.stringify(
+            {
+                response: {
+                    headers: Object.fromEntries(resp.headers),
+                    status: resp.status,
+                },
+                request: {
+                    method: request.method,
+                    url: request.url,
+                    headers: Object.fromEntries(request.headers),
+                },
+            },
+            null,
+            4,
+        ),
+    );
+    return resp;
+}
+
+export async function middlewareMain(
     ...[request, info, next]: Parameters<DenoMiddleWare>
 ): Promise<Response> {
     const nextUrl = new URL(request.url);
@@ -118,4 +156,11 @@ async function reverse_proxy(
             status: 502,
         });
     }
+}
+export default async function (
+    ...[request, info, next]: Parameters<DenoMiddleWare>
+): Promise<Response> {
+    return await middlewareLogger(request, info, async () => {
+        return await middlewareMain(request, info, next);
+    });
 }
