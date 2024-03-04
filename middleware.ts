@@ -132,7 +132,7 @@ export async function middlewareMain(
     return resp;
 }
 import { DenoMiddleWare } from "./DenoMiddleWare.ts";
-async function reverse_proxy(
+export async function reverse_proxy(
     url: URL,
     requestHeaders: Headers,
     request: Request,
