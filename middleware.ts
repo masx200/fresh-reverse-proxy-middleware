@@ -162,15 +162,16 @@ export async function reverse_proxy(
     request: Request,
 ): Promise<Response> {
     try {
+        const req_info = {
+            method: request.method,
+            url: url,
+            headers: Object.fromEntries(requestHeaders),
+        };
         console.log(
             JSON.stringify(
                 {
                     // ...info,
-                    request: {
-                        method: request.method,
-                        url: request.url,
-                        headers: Object.fromEntries(request.headers),
-                    },
+                    request: req_info,
                 },
                 null,
                 4,
@@ -191,11 +192,7 @@ export async function reverse_proxy(
                         headers: Object.fromEntries(response.headers),
                         status: response.status,
                     },
-                    request: {
-                        method: request.method,
-                        url: request.url,
-                        headers: Object.fromEntries(request.headers),
-                    },
+                    request: req_info,
                 },
                 null,
                 4,
