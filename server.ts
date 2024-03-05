@@ -109,6 +109,14 @@ export async function createHandler(
     const ctx = await ServerContext.fromManifest(manifest, config);
     return ctx.handler();
 }
+/**
+ * 启动服务器
+ *
+ * @param manifest 托管应用的清单文件，包含应用的配置和资源信息
+ * @param config 服务器的配置信息，提供给 ServerContext 和 startServer 使用
+ * @param middleware 一个可选的中间件函数，用于在请求处理流程中添加自定义逻辑
+ * @returns Promise<void> 无返回值的Promise
+ */
 export async function start(
     manifest: Manifest,
     config: FreshConfig = {},

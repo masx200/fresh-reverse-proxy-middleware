@@ -22,6 +22,14 @@ import { getInternalFreshState } from "https://deno.land/x/fresh@1.6.5/src/serve
 import { getServerContext } from "https://deno.land/x/fresh@1.6.5/src/server/context.ts";
 import { DenoMiddleWare } from "./DenoMiddleWare.ts";
 export default dev;
+/**
+ * 启动服务器
+ *
+ * @param manifest 托管应用的清单文件，包含应用的配置和资源信息
+ * @param config 服务器的配置信息，提供给 ServerContext 和 startServer 使用
+ * @param middleware 一个可选的中间件函数，用于在请求处理流程中添加自定义逻辑
+ * @returns Promise<void> 无返回值的Promise
+ */
 export async function dev(
     base: string,
     entrypoint: string,
