@@ -182,7 +182,10 @@ export async function reverse_proxy(
             method: request.method,
             body: request.body,
             /* 关闭重定向 */
-            redirect: "manual",
+            /* 可以设定请求头中的字段"x-proxy-redirect"为"error" | "follow" |
+"manual"来设定代理行为的重定向方式. */
+            redirect: (requestHeaders.get("x-proxy-redirect") ??
+                "manual") as RequestRedirect,
         });
         console.log(
             JSON.stringify(
