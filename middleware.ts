@@ -231,8 +231,8 @@ export default async function (
         return await next();
     }
     try {
-        return await Strict_Transport_Security(request, info, async () => {
-            return await middlewareLogger(request, info, async () => {
+        return await middlewareLogger(request, info, async () => {
+            return await Strict_Transport_Security(request, info, async () => {
                 return await middlewareMain(request, info, next);
             });
         });
