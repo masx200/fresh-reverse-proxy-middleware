@@ -1,3 +1,7 @@
+import {
+    bodyToBuffer,
+} from "https://cdn.jsdelivr.net/gh/masx200/deno-http-middleware@3.3.0/mod.ts";
+import { DenoMiddleWare } from "./DenoMiddleWare.ts";
 /**
  * 定义一个适用于Deno服务器中间件的类型。
  *
@@ -147,7 +151,6 @@ export async function middlewareMain(
     );
     return resp;
 }
-import { DenoMiddleWare } from "./DenoMiddleWare.ts";
 /**
  * 主要中间件处理函数
  *
@@ -224,9 +227,14 @@ export async function reverse_proxy(
 export default async function (
     ...[request, info, next]: Parameters<DenoMiddleWare>
 ): Promise<Response> {
+    if (request.headers.get("upgrade") == "websocket") {
+        return await next();
+    }
     try {
-        return await middlewareLogger(request, info, async () => {
-            return await middlewareMain(request, info, next);
+        return await Strict_Transport_Security(request, info, async () => {
+            return await middlewareLogger(request, info, async () => {
+                return await middlewareMain(request, info, next);
+            });
         });
     } catch (error) {
         console.error(error);
@@ -237,4 +245,22 @@ export default async function (
             },
         );
     }
+}
+export async function Strict_Transport_Security(
+    ...[_request, _info, next]: Parameters<DenoMiddleWare>
+): Promise<Response> {
+    // console.log(2);
+    const response = await next();
+    const headers = new Headers(response.headers);
+
+    headers.set("Strict-Transport-Security", "max-age=31536000");
+    // console.log(ctx.response.body);
+    // 必须把响应的主体转换为Uint8Array才行
+    const body = response.body && (await bodyToBuffer(response.body));
+    // headers.delete("content-length");
+    const res = new Response(body, {
+        status: response.status,
+        headers,
+    });
+    return res;
 }
