@@ -1,6 +1,6 @@
-import {
-    bodyToBuffer,
-} from "https://cdn.jsdelivr.net/gh/masx200/deno-http-middleware@3.3.0/mod.ts";
+// import {
+//     bodyToBuffer,
+// } from "https://cdn.jsdelivr.net/gh/masx200/deno-http-middleware@3.3.0/mod.ts";
 import { DenoMiddleWare } from "./DenoMiddleWare.ts";
 /**
  * 定义一个适用于Deno服务器中间件的类型。
