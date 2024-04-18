@@ -29,7 +29,7 @@ export function compose(
                         request: Request,
                         info: ServeHandlerInfo,
                     ) {
-                        return await next(request, info, nextFunc);
+                        return await next(request, info, next1);
                     }
                 };
             },
