@@ -1,4 +1,9 @@
 import { ServeHandlerInfo } from "https://deno.land/x/fresh@1.6.5/src/server/types.ts";
+export type NextFunction = (
+    request: Request,
+    info: ServeHandlerInfo,
+) => Response | Promise<Response>;
+
 /**
  * 定义一个适用于Deno服务器中间件的类型。
  *
@@ -10,5 +15,5 @@ import { ServeHandlerInfo } from "https://deno.land/x/fresh@1.6.5/src/server/typ
 export type DenoMiddleWare = (
     request: Request,
     info: ServeHandlerInfo,
-    next: () => Response | Promise<Response>,
+    next: NextFunction,
 ) => Response | Promise<Response>;
