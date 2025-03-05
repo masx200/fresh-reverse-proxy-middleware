@@ -13,9 +13,18 @@ export async function middlewareMain(
     ...[request, info, next]: Parameters<DenoMiddleWare>
 ): Promise<Response> {
     const nextUrl = new URL(request.url);
-    console.log({ method: request.method, url: request.url });
+    console.log(
+        JSON.stringify(
+            {
+                method: request.method,
+                url: request.url,
+                headers: Object.fromEntries(request.headers),
+            },
+            null,
+            4,
+        ),
+    );
 
-    console.log({ headers: Object.fromEntries(request.headers) });
     const token = Deno.env.get("token");
     const requestHeaders = new Headers(request.headers);
     requestHeaders.append(
@@ -38,7 +47,17 @@ export async function middlewareMain(
             );
             url.search = nextUrl.search;
         }
-        console.log({ url: url.href, method: request.method });
+        console.log(
+            JSON.stringify(
+                {
+                    method: request.method,
+                    url: request.url,
+                    headers: Object.fromEntries(request.headers),
+                },
+                null,
+                4,
+            ),
+        );
         // const requestHeaders = new Headers(request.headers);
         requestHeaders.set("host", url.hostname);
 
@@ -68,8 +87,17 @@ export async function middlewareMain(
             /* 添加search */
             url.search = nextUrl.search;
         }
-        console.log({ url: url.href, method: request.method });
-
+        console.log(
+            JSON.stringify(
+                {
+                    method: request.method,
+                    url: request.url,
+                    headers: Object.fromEntries(request.headers),
+                },
+                null,
+                4,
+            ),
+        );
         requestHeaders.set("host", url.hostname);
 
         // url.protocol = "https";
