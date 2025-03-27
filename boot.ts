@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { DENO_DEPLOYMENT_ID } from "https://deno.land/x/fresh@1.7.3/src/server/build_id.ts";
 import { colors } from "https://deno.land/x/fresh@1.7.3/src/server/deps.ts";
-import { ServeHandler } from "https://deno.land/x/fresh@1.7.3/src/server/types.ts";
+import { ServeHandler } from "./types.ts";
 export type ServeOptions =
     & { port?: number; hostname?: string }
     & (

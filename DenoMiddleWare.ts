@@ -1,7 +1,9 @@
-import { ServeHandlerInfo } from "https://deno.land/x/fresh@1.7.3/src/server/types.ts";
+import { ServeHandlerInfo } from "./types.ts";
 export type NextFunction = (
     request: Request,
-    info: ServeHandlerInfo,
+    info: ServeHandlerInfo & {
+        remoteAddr: Deno.NetAddr;
+    },
 ) => Response | Promise<Response>;
 
 /**
@@ -14,6 +16,8 @@ export type NextFunction = (
  */
 export type DenoMiddleWare = (
     request: Request,
-    info: ServeHandlerInfo,
+    info: ServeHandlerInfo & {
+        remoteAddr: Deno.NetAddr;
+    },
     next: NextFunction,
 ) => Response | Promise<Response>;

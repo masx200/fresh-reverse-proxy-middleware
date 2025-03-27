@@ -11,7 +11,7 @@ import {
     RouteConfig,
     ServeHandlerInfo,
     UnknownHandler,
-} from "https://deno.land/x/fresh@1.7.3/src/server/types.ts";
+} from "./types.ts";
 import { DenoMiddleWare } from "./DenoMiddleWare.ts";
 export type {
     FromManifestConfig,
@@ -69,7 +69,7 @@ export type {
     UnknownHandler,
     UnknownHandlerContext,
     UnknownPageProps,
-} from "https://deno.land/x/fresh@1.7.3/src/server/types.ts";
+} from "./types.ts";
 
 export interface Manifest {
     routes: Record<
