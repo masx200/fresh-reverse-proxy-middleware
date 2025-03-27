@@ -12,11 +12,11 @@ Make sure to install Deno: https://deno.land/manual/getting_started/installation
 Then start the project:
 
 ```
-deno task start
+npx cross-env token=token123456  deno task start
 ```
 
 ```
-deno run -A main.ts
+npx cross-env token=token123456  deno run -A main.ts
 ```
 
 This will watch the project directory and restart as necessary.

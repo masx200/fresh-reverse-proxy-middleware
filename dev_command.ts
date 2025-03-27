@@ -1,25 +1,25 @@
-import { updateCheck } from "https://deno.land/x/fresh@1.6.5/src/dev/update_check.ts";
+import { build } from "https://deno.land/x/fresh@1.7.3/src/dev/build.ts";
 import {
     DAY,
     dirname,
     fromFileUrl,
     join,
     toFileUrl,
-} from "https://deno.land/x/fresh@1.6.5/src/dev/deps.ts";
-import {
-    FreshConfig,
-    Manifest as ServerManifest,
-} from "https://deno.land/x/fresh@1.6.5/src/server/mod.ts";
-import { build } from "https://deno.land/x/fresh@1.6.5/src/dev/build.ts";
+} from "https://deno.land/x/fresh@1.7.3/src/dev/deps.ts";
 import {
     collect,
     ensureMinDenoVersion,
     generate,
     Manifest,
-} from "https://deno.land/x/fresh@1.6.5/src/dev/mod.ts";
-import { startServer } from "https://deno.land/x/fresh@1.6.5/src/server/boot.ts";
-import { getInternalFreshState } from "https://deno.land/x/fresh@1.6.5/src/server/config.ts";
-import { getServerContext } from "https://deno.land/x/fresh@1.6.5/src/server/context.ts";
+} from "https://deno.land/x/fresh@1.7.3/src/dev/mod.ts";
+import { updateCheck } from "https://deno.land/x/fresh@1.7.3/src/dev/update_check.ts";
+import { startServer } from "./boot.ts";
+import { getInternalFreshState } from "https://deno.land/x/fresh@1.7.3/src/server/config.ts";
+import { getServerContext } from "https://deno.land/x/fresh@1.7.3/src/server/context.ts";
+import {
+    FreshConfig,
+    Manifest as ServerManifest,
+} from "https://deno.land/x/fresh@1.7.3/src/server/mod.ts";
 import { DenoMiddleWare } from "./DenoMiddleWare.ts";
 export default dev;
 /**
@@ -63,19 +63,13 @@ export async function dev(
         .default as ServerManifest;
 
     if (Deno.args.includes("build")) {
-        const state = await getInternalFreshState(
-            manifest,
-            config ?? {},
-        );
+        const state = await getInternalFreshState(manifest, config ?? {});
         state.config.dev = false;
         state.loadSnapshot = false;
         state.build = true;
         await build(state);
     } else if (config) {
-        const state = await getInternalFreshState(
-            manifest,
-            config,
-        );
+        const state = await getInternalFreshState(manifest, config);
         state.config.dev = true;
         state.loadSnapshot = false;
         const ctx = await getServerContext(state);

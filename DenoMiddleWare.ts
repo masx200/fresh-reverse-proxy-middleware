@@ -1,4 +1,4 @@
-import { ServeHandlerInfo } from "https://deno.land/x/fresh@1.6.5/src/server/types.ts";
+import { ServeHandlerInfo } from "https://deno.land/x/fresh@1.7.3/src/server/types.ts";
 export type NextFunction = (
     request: Request,
     info: ServeHandlerInfo,

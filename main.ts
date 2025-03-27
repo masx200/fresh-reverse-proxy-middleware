@@ -6,11 +6,11 @@
 
 import "$std/dotenv/load.ts";
 
-import { start } from "./server.ts";
-import manifest from "./fresh.gen.ts";
+import "https://deno.land/x/fresh@1.7.3/src/types.ts";
 import config from "./fresh.config.ts";
-import "https://deno.land/x/fresh@1.6.5/src/types.ts";
+import manifest from "./fresh.gen.ts";
 import middleware from "./middleware.ts";
+import { start } from "./server.ts";
 
 if (import.meta.main) {
     await start(manifest, config, middleware);

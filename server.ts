@@ -1,9 +1,5 @@
-import { ServerContext } from "https://deno.land/x/fresh@1.6.5/src/server/context.ts";
-export type {
-    FromManifestConfig,
-    FromManifestOptions,
-} from "https://deno.land/x/fresh@1.6.5/src/server/context.ts";
-export { STATUS_CODE } from "https://deno.land/x/fresh@1.6.5/src/server/deps.ts";
+import { startServer } from "./boot.ts";
+import { ServerContext } from "https://deno.land/x/fresh@1.7.3/src/server/context.ts";
 import {
     ErrorHandler,
     FreshConfig,
@@ -15,15 +11,22 @@ import {
     RouteConfig,
     ServeHandlerInfo,
     UnknownHandler,
-} from "https://deno.land/x/fresh@1.6.5/src/server/types.ts";
-import { startServer } from "https://deno.land/x/fresh@1.6.5/src/server/boot.ts";
+} from "https://deno.land/x/fresh@1.7.3/src/server/types.ts";
 import { DenoMiddleWare } from "./DenoMiddleWare.ts";
+export type {
+    FromManifestConfig,
+    FromManifestOptions,
+} from "https://deno.land/x/fresh@1.7.3/src/server/context.ts";
 export {
     defineApp,
     defineConfig,
     defineLayout,
     defineRoute,
-} from "https://deno.land/x/fresh@1.6.5/src/server/defines.ts";
+} from "https://deno.land/x/fresh@1.7.3/src/server/defines.ts";
+export { STATUS_CODE } from "https://deno.land/x/fresh@1.7.3/src/server/deps.ts";
+export { RenderContext } from "https://deno.land/x/fresh@1.7.3/src/server/render.ts";
+export type { InnerRenderFunction } from "https://deno.land/x/fresh@1.7.3/src/server/render.ts";
+export type { DestinationKind } from "https://deno.land/x/fresh@1.7.3/src/server/router.ts";
 export type {
     AppContext,
     AppProps,
@@ -66,10 +69,7 @@ export type {
     UnknownHandler,
     UnknownHandlerContext,
     UnknownPageProps,
-} from "https://deno.land/x/fresh@1.6.5/src/server/types.ts";
-export { RenderContext } from "https://deno.land/x/fresh@1.6.5/src/server/render.ts";
-export type { InnerRenderFunction } from "https://deno.land/x/fresh@1.6.5/src/server/render.ts";
-export type { DestinationKind } from "https://deno.land/x/fresh@1.6.5/src/server/router.ts";
+} from "https://deno.land/x/fresh@1.7.3/src/server/types.ts";
 
 export interface Manifest {
     routes: Record<
