@@ -15,6 +15,10 @@ Then start the project:
 deno task start
 ```
 
+```
+deno run -A main.ts
+```
+
 This will watch the project directory and restart as necessary.
 
 # 运行方式

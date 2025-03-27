@@ -5,4 +5,7 @@ import config from "./fresh.config.ts";
 import "https://deno.land/x/fresh@1.6.5/src/types.ts";
 import "$std/dotenv/load.ts";
 import middleware from "./middleware.ts";
-await dev(import.meta.url, "./main.ts", config, middleware);
+
+if (import.meta.main) {
+    await dev(import.meta.url, "./main.ts", config, middleware);
+}

@@ -11,4 +11,7 @@ import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
 import "https://deno.land/x/fresh@1.6.5/src/types.ts";
 import middleware from "./middleware.ts";
-await start(manifest, config, middleware);
+
+if (import.meta.main) {
+    await start(manifest, config, middleware);
+}
