@@ -26,6 +26,9 @@ export async function middlewareMain(
     );
 
     const token = Deno.env.get("token");
+    if (!token) {
+        return next(request, info);
+    }
     const requestHeaders = new Headers(request.headers);
     requestHeaders.append(
         "Forwarded",
@@ -35,15 +38,13 @@ export async function middlewareMain(
     );
     if (nextUrl.pathname.startsWith("/token/" + token + "/http/")) {
         let url = new URL(
-            "http://" +
-                nextUrl.pathname.slice(6 + ("/token/" + token).length),
+            "http://" + nextUrl.pathname.slice(6 + ("/token/" + token).length),
         );
         url.search = nextUrl.search;
         /* 循环处理多重前缀 */
         while (url.pathname.startsWith("/token/" + token + "/http/")) {
             url = new URL(
-                "http://" +
-                    url.pathname.slice(6 + ("/token/" + token).length),
+                "http://" + url.pathname.slice(6 + ("/token/" + token).length),
             );
             url.search = nextUrl.search;
         }
@@ -70,9 +71,7 @@ export async function middlewareMain(
     if (nextUrl.pathname.startsWith("/token/" + token + "/https/")) {
         let url = new URL(
             "https://" +
-                nextUrl.pathname.slice(
-                    6 + 1 + ("/token/" + token).length,
-                ),
+                nextUrl.pathname.slice(6 + 1 + ("/token/" + token).length),
         );
         /* 添加search */
         url.search = nextUrl.search;
@@ -80,9 +79,7 @@ export async function middlewareMain(
         while (url.pathname.startsWith("/token/" + token + "/https/")) {
             url = new URL(
                 "https://" +
-                    url.pathname.slice(
-                        6 + 1 + ("/token/" + token).length,
-                    ),
+                    url.pathname.slice(6 + 1 + ("/token/" + token).length),
             );
             /* 添加search */
             url.search = nextUrl.search;
