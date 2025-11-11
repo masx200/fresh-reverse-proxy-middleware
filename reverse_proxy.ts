@@ -33,13 +33,13 @@ export function shouldInterceptRedirect(url: string): boolean {
 export function convertToLocalUrl(
   externalUrl: string,
   token: string,
-  requestHeaders?: Headers
+  requestHeaders?: Headers,req_url:string
 ): string {
   const url = new URL(externalUrl);
 
   // 尝试从请求头获取协议和主机信息
-  const forwardedProtocol = requestHeaders?.get("x-forwarded-proto");
-  const forwardedHost = requestHeaders?.get("x-forwarded-host");
+  const forwardedProtocol = requestHeaders?.get("x-forwarded-proto")??new URL(req_url).protocol.slice(0, -1);
+  const forwardedHost = requestHeaders?.get("x-forwarded-host")??new URL(req_url).hostname + (new URL(req_url).port ? `:${new URL(req_url).port}` : "");
 
   // 使用转发头信息或回退到从URL解析
   const protocol = url.protocol.slice(0, -1);
@@ -95,7 +95,7 @@ export async function reverse_proxy(
       if (location && shouldInterceptRedirect(location)) {
         const token = Deno.env.get("token");
         if (token) {
-          const localUrl = convertToLocalUrl(location, token, requestHeaders);
+          const localUrl = convertToLocalUrl(location, token, requestHeaders,request.url);
           console.log(
             JSON.stringify(
               {
