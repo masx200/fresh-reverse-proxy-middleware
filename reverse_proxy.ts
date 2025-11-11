@@ -27,12 +27,23 @@ export function shouldInterceptRedirect(url: string): boolean {
  * 将外部URL转换为本地代理URL
  * @param externalUrl 外部URL
  * @param token 认证token
+ * @param requestHeaders 请求头，可选，用于获取x-forwarded-proto和x-forwarded-host
  * @returns 本地代理URL
  */
-export function convertToLocalUrl(externalUrl: string, token: string): string {
+export function convertToLocalUrl(
+    externalUrl: string,
+    token: string,
+    requestHeaders?: Headers,
+): string {
     const url = new URL(externalUrl);
-    const protocol = url.protocol.slice(0, -1); // 移除末尾的冒号
-    const host = url.hostname + (url.port ? `:${url.port}` : "");
+
+    // 尝试从请求头获取协议和主机信息
+    const forwardedProtocol = requestHeaders?.get("x-forwarded-proto");
+    const forwardedHost = requestHeaders?.get("x-forwarded-host");
+
+    // 使用转发头信息或回退到从URL解析
+    const protocol = forwardedProtocol || url.protocol.slice(0, -1);
+    const host = forwardedHost || (url.hostname + (url.port ? `:${url.port}` : ""));
     const path = url.pathname + url.search;
 
     return `/token/${token}/${protocol}/${host}${path}`;
@@ -84,7 +95,7 @@ export async function reverse_proxy(
             if (location && shouldInterceptRedirect(location)) {
                 const token = Deno.env.get("token");
                 if (token) {
-                    const localUrl = convertToLocalUrl(location, token);
+                    const localUrl = convertToLocalUrl(location, token, requestHeaders);
                     console.log(
                         JSON.stringify(
                             {
