@@ -12,11 +12,11 @@ Make sure to install Deno: https://deno.land/manual/getting_started/installation
 Then start the project:
 
 ```
-npx cross-env token=token123456  deno task start
+npx cross-env -y token=token123456  deno task start
 ```
 
 ```
-npx cross-env token=token123456  deno run -A main.ts
+npx cross-env -y token=token123456  deno run -A main.ts
 ```
 
 This will watch the project directory and restart as necessary.
@@ -26,7 +26,7 @@ This will watch the project directory and restart as necessary.
 设置环境变量 token 访问秘钥
 
 ```
-npx cross-env token=token123456  deno task start
+npx -y cross-env token=token123456  deno task start
 ```
 
 访问地址:

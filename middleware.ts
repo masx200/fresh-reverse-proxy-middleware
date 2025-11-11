@@ -13,7 +13,7 @@ import { ServeHandlerInfo } from "./server.ts";
  * @param next 下一个中间件函数，用于将请求链式传递下去。
  * @returns 返回一个Promise，该Promise解析为一个响应对象。
  */
-export default async function (
+export default async function middleware(
     ...[request, info, next1]: Parameters<DenoMiddleWare>
 ): Promise<Response> {
     const middlewares: DenoMiddleWare[] = [
