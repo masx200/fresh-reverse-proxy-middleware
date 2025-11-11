@@ -33,7 +33,7 @@ export function shouldInterceptRedirect(url: string): boolean {
 export function convertToLocalUrl(
   externalUrl: string,
   token: string,
-  requestHeaders?: Headers,req_url:string
+  requestHeaders: Headers,req_url:string
 ): string {
   const url = new URL(externalUrl);
 
