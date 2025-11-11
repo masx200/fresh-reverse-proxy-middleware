@@ -19,8 +19,8 @@ const REDIRECT拦截域名前缀 = [
  * @param url 要检查的URL
  * @returns 如果需要拦截返回true，否则返回false
  */
-function shouldInterceptRedirect(url: string): boolean {
-    return REDIRECT拦截域名前缀.some(prefix => url.startsWith(prefix));
+export function shouldInterceptRedirect(url: string): boolean {
+    return REDIRECT拦截域名前缀.some((prefix) => url.startsWith(prefix));
 }
 
 /**
@@ -29,10 +29,10 @@ function shouldInterceptRedirect(url: string): boolean {
  * @param token 认证token
  * @returns 本地代理URL
  */
-function convertToLocalUrl(externalUrl: string, token: string): string {
+export function convertToLocalUrl(externalUrl: string, token: string): string {
     const url = new URL(externalUrl);
     const protocol = url.protocol.slice(0, -1); // 移除末尾的冒号
-    const host = url.hostname + (url.port ? `:${url.port}` : '');
+    const host = url.hostname + (url.port ? `:${url.port}` : "");
     const path = url.pathname + url.search;
 
     return `/token/${token}/${protocol}/${host}${path}`;
